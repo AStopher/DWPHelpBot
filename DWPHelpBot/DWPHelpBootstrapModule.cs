@@ -22,6 +22,8 @@ namespace DWPHelpBot
         DatabaseUtilities databaseUtilityModule                     = null;
         TimedEventModule timedEventModule                           = null;
         StatisticsModule statisticsModule                           = null;
+        RedditDataModule redditDataModule                           = null;
+        RedditOAuthModule redditOAuthModule                         = null;
 
         Dictionary<string, Thread> threads                          = null;
         Dictionary<string, object> modules                          = null;
@@ -62,6 +64,8 @@ namespace DWPHelpBot
                     {"DatabaseUtilityModule", databaseUtilityModule},
                     {"TimedEventModule", timedEventModule},
                     {"StatisticsModule", statisticsModule},
+                    {"RedditDataModule", redditDataModule},
+                    {"RedditOAuthModule", redditOAuthModule},
                 };
 
                 threads = threads = new Dictionary<string, Thread>();
@@ -113,6 +117,10 @@ namespace DWPHelpBot
                 timedEventModule = (TimedEventModule)targetVar;
             else if (targetVar is StatisticsModule)
                 statisticsModule = (StatisticsModule)targetVar;
+            else if (targetVar is RedditDataModule)
+                redditDataModule = (RedditDataModule)targetVar;
+            else if (targetVar is RedditOAuthModule)
+                redditOAuthModule = (RedditOAuthModule)targetVar;
 
             if (targetVar is DatabaseUtilities)
             {
@@ -127,7 +135,7 @@ namespace DWPHelpBot
         {
             if (nextUpdateInterval <= DateTime.Now)
             {
-                nextUpdateInterval = DateTime.Now.AddMilliseconds(1000.0f / tickRate);
+                nextUpdateInterval = DateTime.Now.AddMilliseconds(tickRate);
 
                 databaseUtilityModule.Update();
                 timedEventModule.Update();
